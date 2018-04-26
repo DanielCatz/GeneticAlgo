@@ -1,0 +1,69 @@
+package populations;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+import utils.Parameters;
+
+public class Individual {
+private String output;
+private double fitness;
+
+	public Individual(){
+		output ="";
+		fitness = 0;
+	}
+
+	public Individual(String output, double fitness)
+    {
+        this.output = output;
+        this.fitness = fitness;
+    }
+
+    public void setFitness(String target)
+    {
+        int right = 0;
+        for (int i = 0; i < target.length(); i++)
+        {
+            if (target.charAt(i) == output.charAt(i))
+                right++;
+        }
+        fitness = right / (double)target.length();
+    }
+    
+    static ArrayList<Individual> Reproduce(ArrayList<Individual> individuals, int reproduceN, Parameters params)
+    {
+    	ArrayList<Individual> newIndividuals = new ArrayList<Individual>();
+    	Random rand = new Random();
+        for (int i = 0; i < reproduceN; i++)
+        {
+            // Choose first one
+        	Individual first =  individuals.get(individuals.size()-1);
+            // Choose second one
+        	Individual second = individuals.get(rand.nextInt(individuals.size()));
+
+            // Choose genetic line
+            int line = rand.nextInt( params.getFit().length() - 1);
+            StringBuilder output = new StringBuilder();
+            // Combine entity info
+            for (int j = 0; j < line; j++)
+            {
+                if (rand.nextInt(101) < mutationChance)
+                    output += params.getGenePool();
+                else
+                    output += first.output[j];
+            }
+            for (int j = line; j < target.Length; j++)
+            {
+                if (rnd.Next(101) < mutationChance)
+                    output += alphabet[rnd.Next(alphabet.Length)];
+                else
+                    output += second.output[j];
+            }
+            newEntities.Add(new Individual(output, 0));
+        }
+        entities.AddRange(newEntities);
+        return entities;
+    }
+}
+}

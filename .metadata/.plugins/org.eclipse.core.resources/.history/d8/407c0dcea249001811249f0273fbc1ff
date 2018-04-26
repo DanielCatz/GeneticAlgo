@@ -1,0 +1,99 @@
+package populations;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+import utils.Parameters;
+
+public class Individual {
+private String chromosome;
+private double fitness;
+
+	public Individual(){
+		chromosome ="";
+		fitness = 0;
+	}
+	
+	public String getChomosome() {
+		return chromosome;
+	}
+
+	public void setChromosome(String output) {
+		this.chromosome = output;
+	}
+
+	public double getFitness() {
+		return fitness;
+	}
+
+	public void setFitness(double fitness) {
+		this.fitness = fitness;
+	}
+
+	public Individual(String output, double fitness)
+    {
+        this.chromosome = output;
+        this.fitness = fitness;
+    }
+
+    public void calculateFitness(String target)
+    {
+        int right = 0;
+        for (int i = 0; i < target.length(); i++)
+        {
+            if (target.charAt(i) == chromosome.charAt(i))
+                right++;
+        }
+        fitness = right / (double)target.length();
+    }
+    
+    public static ArrayList<Individual> crossover(ArrayList<Individual> individuals, Parameters params)
+    {
+    	ArrayList<Individual> newIndividuals = new ArrayList<Individual>();
+    	Random rand = new Random();
+    	StringBuilder output = new StringBuilder();
+        for (int i = 0; i < params.getTurnOver(); i++)
+        {
+            // Choose first one
+        	Individual mother =  individuals.get(individuals.size()-1);
+            // Choose second one
+        	Individual father = individuals.get(rand.nextInt(individuals.size()));
+
+            // Choose genetic line
+            int line = rand.nextInt( params.getFit().length() - 1);
+            // Combine entity info
+            for (int j = 0; j < line; j++)
+            {
+                if (rand.nextInt(101) < params.getMutationChance())
+                    output.append(params.getGenePool().charAt(rand.nextInt(params.getGenePool().length())));
+                else
+                    output.append(mother.getChomosome().charAt(i));
+            }
+            for (int j = line; j < params.getFit().length(); j++)
+            {
+                if (rand.nextInt(101) < params.getMutationChance())
+                    output.append(params.getGenePool().charAt(rand.nextInt(params.getGenePool().length())));
+                else
+                    output.append(father.getChomosome().charAt(i));
+            }
+            newIndividuals.add(new Individual(output.toString(), 0));
+        }
+        individuals.addAll(newIndividuals);
+        return individuals;
+    }
+    
+    public static ArrayList<Individual> initPopulation(int population, Parameters params){
+    	ArrayList<Individual> individuals = new ArrayList<>();
+    	Random rand = new Random();
+    	StringBuilder chromosome = new StringBuilder();
+    	for(int i = 0 ; i < population ; i++){
+    		chromosome.setLength(0);
+    		for(int j = 0 ; j < params.getFit().length() ; j++){
+        		chromosome.append(params.getGenePool().charAt(rand.nextInt(params.getGenePool().length())));        		
+        	}
+    		individuals.add(new Individual(chromosome.toString(),0));
+    	}    	
+    	return individuals;
+    }
+
+}

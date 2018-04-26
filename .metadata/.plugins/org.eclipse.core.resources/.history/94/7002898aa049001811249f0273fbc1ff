@@ -1,0 +1,36 @@
+package driver;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+
+import populations.Individual;
+import utils.Parameters;
+
+public class Driver {
+
+	public static void main(String[] args) {
+		
+		long generation=0;
+		double fittest = -1;
+		String genes = "qwertyuiopasdfghjklzxcvbnm ?!QWERTYUIOPASDFGHJKLZXCVBNM";
+        String fit = "Am I love?";
+        int mutationProb = 20;
+		
+		Parameters params = new Parameters(fit, genes, mutationProb);
+		ArrayList<Individual> population = Individual.initPopulation(400, params);
+		while(generation<1000){
+			
+			generation++;
+			for(Individual i: population){
+				i.calculateFitness(params.getFit());
+			}
+			
+			population.sort(Comparator.comparing(Individual::getFitness));
+			
+			
+			
+		}
+
+	}
+
+}
