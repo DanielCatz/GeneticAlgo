@@ -9,23 +9,18 @@ import utils.Parameters;
 public class Driver {
 
 	public static void main(String[] args) {
+		
+		long generation=0;
+		double fittest = -1;
 		String genes = "qwertyuiopasdfghjklzxcvbnm ?!QWERTYUIOPASDFGHJKLZXCVBNM";
         String fit = "Am I love?";
-        int mutationProb = 15;
+        int mutationProb = 20;
         int turnOver=200;
-        Parameters params = new Parameters(fit, genes, mutationProb, turnOver);
-        //evolveToString(params);
-    
-        
-	}
-	
-	public static void evolveToString(Parameters params){
-		long generation=0;
-		double fittest = -1;		
+		
+		Parameters params = new Parameters(fit, genes, mutationProb, turnOver);
 		ArrayList<Individual> population = Individual.initPopulation(400, params);
 		Individual temp = new Individual();
-		
-		while(generation<5000 && fittest!= 1){
+		while(generation<1000){
 			
 			generation++;
 			for(Individual i: population){
@@ -44,7 +39,7 @@ public class Driver {
 			System.out.println("Fittest So far: "+ fittest +"  "+ temp.getChomosome());
 		}
 		fittest = temp.getFitness();
-		System.out.println("Fittest Generation: "+ generation +"  "+ temp.getChomosome());
+		System.out.println("Fittest: "+ fittest +"  "+ temp.getChomosome());
 		
 	}
 

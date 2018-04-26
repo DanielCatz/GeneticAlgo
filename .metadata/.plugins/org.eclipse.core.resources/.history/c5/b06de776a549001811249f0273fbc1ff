@@ -14,9 +14,7 @@ public class Driver {
         int mutationProb = 15;
         int turnOver=200;
         Parameters params = new Parameters(fit, genes, mutationProb, turnOver);
-        //evolveToString(params);
-    
-        
+        evolveToString(params);
 	}
 	
 	public static void evolveToString(Parameters params){

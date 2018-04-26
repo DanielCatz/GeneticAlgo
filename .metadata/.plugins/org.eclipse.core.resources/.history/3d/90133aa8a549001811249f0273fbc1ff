@@ -15,8 +15,9 @@ public class Driver {
         int turnOver=200;
         Parameters params = new Parameters(fit, genes, mutationProb, turnOver);
         //evolveToString(params);
-    
-        
+        ArrayList<Individual> population = Individual.initPopulation(40, params);
+        population.sort(Comparator.comparing(Individual::getFitness));
+        System.out.print(population);
 	}
 	
 	public static void evolveToString(Parameters params){
